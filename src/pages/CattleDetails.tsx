@@ -7,9 +7,7 @@ import {
   ScaleIcon,
   CalendarIcon,
   TagIcon,
-  PhotoIcon,
   XMarkIcon,
-  ArrowRightIcon,
   CheckIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/outline';

@@ -6,11 +6,9 @@ interface CattleCardProps {
   id: string;
   name: string;
   type: string;
-  breed: string;
-  age: number;
   weight: number;
+  age: number;
   price: number;
-  location: string;
   image: string;
   featured?: boolean;
   isAvailable?: boolean;
@@ -20,11 +18,9 @@ export default function CattleCard({
   id, 
   name,
   type,
-  breed,
   weight, 
   age, 
   price,
-  location,
   image,
   featured = false,
   isAvailable = true 

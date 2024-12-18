@@ -6,8 +6,9 @@ interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedMethod: 'bkash' | 'nagad' | null;
-  onSelectMethod: (method: 'bkash' | 'nagad') => void;
-  onConfirm: (transactionId: string) => void;
+  onSelectMethod: (method: 'bkash' | 'nagad' | null) => void;
+  formData: OrderFormData;
+  onConfirm: () => void;
 }
 
 export default function PaymentModal({ 
@@ -15,6 +16,7 @@ export default function PaymentModal({
   onClose, 
   selectedMethod, 
   onSelectMethod,
+  formData,
   onConfirm
 }: PaymentModalProps) {
   const [transactionId, setTransactionId] = useState('');
