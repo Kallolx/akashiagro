@@ -4,23 +4,29 @@ import { useNavigate } from 'react-router-dom';
 
 interface CattleCardProps {
   id: string;
-  image: string;
-  breed: string;
-  weight: string;
-  age: string;
-  price: string;
+  name: string;
   type: string;
+  breed: string;
+  age: number;
+  weight: number;
+  price: number;
+  location: string;
+  image: string;
+  featured?: boolean;
   isAvailable?: boolean;
 }
 
 export default function CattleCard({ 
   id, 
-  image, 
-  breed, 
+  name,
+  type,
+  breed,
   weight, 
   age, 
-  price, 
-  type,
+  price,
+  location,
+  image,
+  featured = false,
   isAvailable = true 
 }: CattleCardProps) {
   const navigate = useNavigate();
@@ -37,19 +43,24 @@ export default function CattleCard({
       viewport={{ once: true }}
     >
       {/* Image Container */}
-      <div className="aspect-[4/3] overflow-hidden rounded-t-2xl">
+      <div className="aspect-[4/3] overflow-hidden rounded-t-2xl relative bg-gray-100">
         <img
           src={image}
-          alt={`${breed} cattle`}
+          alt={`${name}`}
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
         />
+        {featured && (
+          <div className="absolute top-3 right-3 px-2 py-1 bg-primary-500 text-white text-xs font-medium rounded-full">
+            Featured
+          </div>
+        )}
       </div>
 
       {/* Content */}
       <div className="p-4 sm:p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">{breed}</h3>
+          <h3 className="text-lg font-semibold text-gray-900">{name}</h3>
           {isAvailable ? (
             <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
               Available

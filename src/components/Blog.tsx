@@ -81,7 +81,7 @@ const BengaliTitle = ({ children }: { children: React.ReactNode }) => (
   </h3>
 );
 
-export default function Blog() {
+const Blog = () => {
   return (
     <section id="blog" className="py-16 sm:py-24 bg-gray-50">
       <div className="container-custom">
@@ -191,4 +191,6 @@ export default function Blog() {
       </div>
     </section>
   );
-} 
+};
+
+export default Blog; 

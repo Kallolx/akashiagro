@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -11,46 +12,63 @@ const navigation = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
     if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      element?.scrollIntoView({ behavior: 'smooth' });
+      if (location.pathname === '/') {
+        const element = document.querySelector(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = '/' + href;
+      }
     }
   };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm">
       <nav className="relative mx-auto px-3 sm:px-6 lg:px-8">
-        {/* Main Navbar */}
         <div className="flex items-center justify-between h-16">
-          {/* Logo Section - Adjusted padding */}
+          {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
-            <a href="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <img
                 className="h-8 w-auto"
-                src="images/logo.png"
+                src="/images/logo.png"
                 alt="Akashi Agro"
               />
               <div className="block">
                 <p className="text-sm sm:text-base font-bold text-gray-900 leading-tight">Akashi Agro</p>
                 <p className="text-xs sm:text-sm text-gray-600 leading-tight">Premium Cattle Trading</p>
               </div>
-            </a>
+            </Link>
           </div>
 
-          {/* Desktop Navigation - Centered */}
+          {/* Desktop Navigation */}
           <div className="hidden lg:flex lg:items-center lg:gap-x-6 flex-1 justify-center">
             {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors duration-200"
-              >
-                {item.name}
-              </a>
+              item.href.startsWith('#') ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }}
+                  className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors duration-200"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors duration-200"
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </div>
 

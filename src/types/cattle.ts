@@ -1,17 +1,17 @@
-export type CattleType = 'Bull' | 'Cow' | 'Calf';
-export type CattleBreed = 'Brahman' | 'Sahiwal' | 'Holstein Friesian' | 'Indigenous';
+export type CattleType = 'Bull' | 'Cow';
+export type CattleBreed = 'Brahman' | 'Jersey' | 'Sahiwal' | 'Holstein Friesian' | 'Indigenous';
 
 export interface Cattle {
   id: string;
   name: string;
   type: CattleType;
   breed: CattleBreed;
-  age: number; // in months
-  weight: number; // in KG
+  age: number;
+  weight: number;
   price: number;
-  description: string;
-  images: string[];
-  featured?: boolean;
-  available: boolean;
   location: string;
+  description: string;
+  image: string;
+  featured: boolean;
+  isAvailable?: boolean;
 } 

@@ -7,28 +7,16 @@ import {
   ScaleIcon,
   CalendarIcon,
   TagIcon,
-  PhoneIcon,
-  ChevronRightIcon,
-  CurrencyBangladeshiIcon,
-  ClipboardDocumentCheckIcon,
-  TruckIcon,
   PhotoIcon,
   XMarkIcon,
   ArrowRightIcon,
   CheckIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
 import PaymentModal from '../components/PaymentModal';
 import OrderForm from '../components/OrderForm';
-
-interface ShippingAddress {
-  name: string;
-  phone: string;
-  address: string;
-  city: string;
-  district: string;
-}
 
 interface OrderFormData {
   name: string;
@@ -45,16 +33,20 @@ export default function CattleDetails() {
   
   const cattle = cattleData.find(c => c.id === id);
 
-  const [selectedImage, setSelectedImage] = useState<number>(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [orderFormData, setOrderFormData] = useState<OrderFormData | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'bkash' | 'nagad' | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   if (!cattle) {
     return (
@@ -78,59 +70,30 @@ export default function CattleDetails() {
       <div className="container-custom px-3 sm:px-4">
         {/* Back Button */}
         <button
-          onClick={() => navigate('/cattle')}
+          onClick={handleBack}
           className="mb-4 sm:mb-6 inline-flex items-center gap-2 text-gray-600 hover:text-gray-900"
         >
           <ArrowLeftIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="text-sm sm:text-base">Back to Cattle Listing</span>
+          <span className="text-sm sm:text-base">Back</span>
         </button>
 
         <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
-            {/* Image Section - Full width on mobile */}
+            {/* Image Section */}
             <div className="relative order-1 md:order-none">
-              {/* Main Image */}
               <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
-                {cattle.images.length > 0 ? (
-                  <img
-                    src={cattle.images[selectedImage]}
-                    alt={cattle.name}
-                    className="w-full h-full object-cover cursor-pointer"
-                    onClick={() => setIsGalleryOpen(true)}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    <PhotoIcon className="w-12 h-12" />
-                  </div>
-                )}
+                <img
+                  src={cattle.image}
+                  alt={cattle.name}
+                  className="w-full h-full object-cover cursor-pointer"
+                  onClick={() => setIsGalleryOpen(true)}
+                />
                 {cattle.featured && (
                   <div className="absolute top-4 right-4 px-3 py-1 bg-primary-500 text-white text-sm font-medium rounded-full">
                     Featured
                   </div>
                 )}
               </div>
-
-              {/* Thumbnail Gallery - Hide scrollbar on mobile */}
-              {cattle.images.length > 1 && (
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                    {cattle.images.map((image, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedImage(index)}
-                        className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 
-                          ${selectedImage === index ? 'border-primary-500' : 'border-white/50'}`}
-                      >
-                        <img
-                          src={image}
-                          alt={`${cattle.name} view ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Details Section */}
@@ -144,7 +107,7 @@ export default function CattleDetails() {
                 {cattle.name}
               </h1>
 
-              {/* Info Grid - 2 columns on all screens */}
+              {/* Info Grid */}
               <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 text-sm text-gray-500">
@@ -230,26 +193,16 @@ export default function CattleDetails() {
                 >
                   {/* Image */}
                   <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
-                    {similarCattle.images.length > 0 ? (
-                      <img
-                        src={similarCattle.images[0]}
-                        alt={similarCattle.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        Image Coming Soon
-                      </div>
-                    )}
+                    <img
+                      src={similarCattle.image}
+                      alt={similarCattle.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                     {similarCattle.featured && (
                       <div className="absolute top-3 right-3 px-3 py-1 bg-primary-500 text-white text-xs font-medium rounded-full">
                         Featured
                       </div>
                     )}
-                    <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-gray-700">
-                      <MapPinIcon className="w-3 h-3" />
-                      {similarCattle.location}
-                    </div>
                   </div>
 
                   {/* Content */}
@@ -315,41 +268,11 @@ export default function CattleDetails() {
 
             <div className="relative aspect-[4/3]">
               <img
-                src={cattle.images[selectedImage]}
+                src={cattle.image}
                 alt={cattle.name}
                 className="w-full h-full object-contain"
               />
-              
-              {cattle.images.length > 1 && (
-                <>
-                  <button
-                    onClick={() => setSelectedImage((prev) => (prev === 0 ? cattle.images.length - 1 : prev - 1))}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 text-white hover:bg-white/20"
-                  >
-                    <ArrowLeftIcon className="w-6 h-6" />
-                  </button>
-                  <button
-                    onClick={() => setSelectedImage((prev) => (prev === cattle.images.length - 1 ? 0 : prev + 1))}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 text-white hover:bg-white/20"
-                  >
-                    <ArrowRightIcon className="w-6 h-6" />
-                  </button>
-                </>
-              )}
             </div>
-
-            {cattle.images.length > 1 && (
-              <div className="mt-4 flex justify-center gap-2">
-                {cattle.images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`w-2 h-2 rounded-full transition-colors
-                      ${selectedImage === index ? 'bg-white' : 'bg-white/30 hover:bg-white/50'}`}
-                  />
-                ))}
-              </div>
-            )}
           </Dialog.Panel>
         </div>
       </Dialog>
@@ -362,14 +285,17 @@ export default function CattleDetails() {
           setShowOrderForm(false);
           setShowPaymentModal(true);
         }}
-        cattleImage={cattle.images[0]}
+        cattleImage={cattle.image}
         cattleName={cattle.name}
       />
 
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
-        onConfirm={(transactionId) => {
+        selectedMethod={selectedPaymentMethod}
+        onSelectMethod={setSelectedPaymentMethod}
+        formData={orderFormData as OrderFormData}
+        onConfirm={() => {
           setShowPaymentModal(false);
           setShowConfirmation(true);
         }}

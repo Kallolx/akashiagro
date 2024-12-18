@@ -8,16 +8,6 @@ interface PaymentModalProps {
   selectedMethod: 'bkash' | 'nagad' | null;
   onSelectMethod: (method: 'bkash' | 'nagad') => void;
   onConfirm: (transactionId: string) => void;
-  formData: OrderFormData;
-}
-
-interface OrderFormData {
-  name: string;
-  whatsapp: string;
-  address: string;
-  city: string;
-  district: string;
-  notes?: string;
 }
 
 export default function PaymentModal({ 
@@ -25,8 +15,7 @@ export default function PaymentModal({
   onClose, 
   selectedMethod, 
   onSelectMethod,
-  onConfirm,
-  formData 
+  onConfirm
 }: PaymentModalProps) {
   const [transactionId, setTransactionId] = useState('');
 

@@ -32,7 +32,7 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-sans">
       <Navbar />
       <main className="pt-[72px]">
         <Routes>
