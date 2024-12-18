@@ -2,6 +2,15 @@ import { Dialog } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
+interface OrderFormData {
+  name: string;
+  whatsapp: string;
+  address: string;
+  city: string;
+  district: string;
+  notes?: string;
+}
+
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,7 +25,7 @@ export default function PaymentModal({
   onClose, 
   selectedMethod, 
   onSelectMethod,
-  formData,
+
   onConfirm
 }: PaymentModalProps) {
   const [transactionId, setTransactionId] = useState('');
@@ -110,7 +119,7 @@ export default function PaymentModal({
                 </div>
 
                 <button
-                  onClick={() => onConfirm(transactionId)}
+                  onClick={() => onConfirm()}
                   disabled={!transactionId}
                   className="w-full px-6 py-3 rounded-full bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
