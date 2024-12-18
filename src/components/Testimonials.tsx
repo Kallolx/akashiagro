@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon } from '@heroicons/react/24/outline';
+import { CheckBadgeIcon } from '@heroicons/react/24/outline';
 
 const testimonials = [
   {

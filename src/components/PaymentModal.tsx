@@ -11,6 +11,15 @@ interface PaymentModalProps {
   formData: OrderFormData;
 }
 
+interface OrderFormData {
+  name: string;
+  whatsapp: string;
+  address: string;
+  city: string;
+  district: string;
+  notes?: string;
+}
+
 export default function PaymentModal({ 
   isOpen, 
   onClose, 

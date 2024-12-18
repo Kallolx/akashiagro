@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ShieldCheckIcon, TruckIcon, DocumentCheckIcon, EyeIcon, FlagIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { ShieldCheckIcon, TruckIcon, DocumentCheckIcon } from '@heroicons/react/24/outline';
 
 const features = [
   {

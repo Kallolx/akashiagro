@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { PhoneIcon, EnvelopeIcon, UserGroupIcon, BuildingOfficeIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { PhoneIcon, EnvelopeIcon, UserGroupIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 const team = [
   {
@@ -103,7 +103,7 @@ export default function Team() {
                 <div className="mt-6 sm:mt-8">
                   <h4 className="text-base sm:text-lg font-semibold text-gray-900">Key Achievements</h4>
                   <ul className="mt-3 sm:mt-4 space-y-3 sm:space-y-4">
-                    {team[0].achievements.map((achievement, index) => (
+                    {team[0]?.achievements?.map((achievement, index) => (
                       <li key={index} className="flex items-center gap-2 sm:gap-3">
                         <AcademicCapIcon className="h-4 w-4 sm:h-5 sm:w-5 text-primary-600 flex-shrink-0" />
                         <span className="text-sm sm:text-base text-gray-600">{achievement}</span>
@@ -180,7 +180,7 @@ export default function Team() {
                     <div className="mt-3 sm:mt-4">
                       <h4 className="text-xs sm:text-sm font-medium text-gray-900">Areas of Expertise</h4>
                       <ul className="mt-2 space-y-1">
-                        {member.expertise.map((skill, idx) => (
+                        {member.expertise?.map((skill, idx) => (
                           <li key={idx} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-600">
                             <UserGroupIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary-600 flex-shrink-0" />
                             {skill}

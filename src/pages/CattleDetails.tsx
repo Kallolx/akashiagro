@@ -30,6 +30,15 @@ interface ShippingAddress {
   district: string;
 }
 
+interface OrderFormData {
+  name: string;
+  whatsapp: string;
+  address: string;
+  city: string;
+  district: string;
+  notes?: string;
+}
+
 export default function CattleDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -38,33 +47,10 @@ export default function CattleDetails() {
 
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'bkash' | 'nagad' | null>(null);
-  const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
-    name: '',
-    phone: '',
-    address: '',
-    city: '',
-    district: '',
-  });
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [orderFormData, setOrderFormData] = useState<OrderFormData | null>(null);
-
-  const paymentMethods = [
-    {
-      id: 'bkash',
-      name: 'bKash',
-      number: '01757320452',
-      logo: '/images/bkash-logo.svg'
-    },
-    {
-      id: 'nagad',
-      name: 'Nagad',
-      number: '01757320452',
-      logo: '/images/nagad-logo.svg'
-    }
-  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -86,8 +72,6 @@ export default function CattleDetails() {
       </div>
     );
   }
-
-  const ADVANCE_PAYMENT = 1000;
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16 sm:pt-24 pb-8 sm:pb-16">
@@ -205,9 +189,6 @@ export default function CattleDetails() {
                     <p className="text-xs sm:text-sm text-gray-500">Price</p>
                     <p className="text-2xl sm:text-3xl font-bold text-primary-600">
                       ৳{cattle.price.toLocaleString()}
-                    </p>
-                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                      Advance Payment: ৳1,000
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
@@ -388,9 +369,6 @@ export default function CattleDetails() {
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
-        selectedMethod={selectedPaymentMethod}
-        onSelectMethod={setSelectedPaymentMethod}
-        formData={orderFormData!}
         onConfirm={(transactionId) => {
           setShowPaymentModal(false);
           setShowConfirmation(true);

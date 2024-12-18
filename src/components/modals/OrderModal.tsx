@@ -22,12 +22,11 @@ const paymentMethods = [
 interface OrderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  cattleId: string;
   breed: string;
   price: string;
 }
 
-export default function OrderModal({ isOpen, onClose, cattleId, breed, price }: OrderModalProps) {
+export default function OrderModal({ isOpen, onClose, breed, price }: OrderModalProps) {
   const [selectedPayment, setSelectedPayment] = useState(paymentMethods[0]);
   const [step, setStep] = useState<'details' | 'payment' | 'confirmation'>('details');
   const [formData, setFormData] = useState({
